@@ -35,5 +35,5 @@ class YourOwnClass extends Oauth
                  'currentUserEmail' => env('EMAIL'),
         ];
 
-return (new Oauth($param))->accessToken();
+return (new YourOwnClass($param))->accessToken();
 ```
