@@ -66,24 +66,11 @@ abstract class Oauth{
     }
 
     /**
-     * redirect after confirm auth
-     * 
-     * @return redirect
-     */
-    protected abstract function redirectAfterSetupAuth();
-
-    /**
-     * store oauth tokens
-     *
-     * @return void
-     */
-    protected abstract function storeOauthTokens(string $accessToken, string $refreshToken, $expirytime = null);
-
-    /**
      * renew access token
+     * 
      * @return string || Exption
      */
-    private function reNewAccessToken()
+    public function reNewAccessToken()
     {
         if (! $this->getRefreshToken()) {
          Throw new \Exception('Refresh Token Token Not Provided');
@@ -102,11 +89,30 @@ abstract class Oauth{
          return $response->access_token;
     }
 
-    private function getParamsWithRefreshToken()
+    /**
+     * get params with refresh token
+     * 
+     * @return array
+     */
+    protected function getParamsWithRefreshToken()
     {
         $this->requestParams['form_params'] += ['refresh_token' => $this->getRefreshToken()];
         return $this->requestParams;
     }
+
+    /**
+     * redirect after confirm auth
+     * 
+     * @return redirect
+     */
+    protected abstract function redirectAfterSetupAuth();
+
+    /**
+     * store oauth tokens
+     *
+     * @return void
+     */
+    protected abstract function storeOauthTokens(string $accessToken, string $refreshToken, $expirytime = null);
 
     /**
      * update access token & expires time
@@ -142,5 +148,4 @@ abstract class Oauth{
      * @return bool
      */
     protected abstract function isExpire($expiryDateTime);
-
 }
